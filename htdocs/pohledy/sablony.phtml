@@ -1,0 +1,10 @@
+<h1>Šablony vizitek</h1>
+    <div class="templates">
+        <?php foreach ($sablony as $sablona): ?>
+            <div class="template">
+                <img src="<?= htmlspecialchars($sablona['picture']) ?>" alt="<?= htmlspecialchars($sablona['name']) ?>">
+                <h3><?= htmlspecialchars($sablona['name']) ?></h3>
+                <p><?= htmlspecialchars($sablona['description']) ?></p>
+            </div>
+        <?php endforeach; ?>
+    </div>

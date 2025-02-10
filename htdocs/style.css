@@ -1,0 +1,260 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-top: 50px;
+    padding-bottom: 10px;
+    padding-left: 50px;
+    padding-right: 50px;
+    background-size: cover;
+    background-position: center;
+    line-height: 1.6;
+    margin: 0;
+
+
+
+    /*background-image: url('img/background.jpg');
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed; 
+    background-position: center;*/
+
+}
+
+/*#login-form {
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}*/
+
+h1 {
+	text-align: center;
+	color: #444444;
+	text-shadow: 3px 3px 3px #aaaaaa;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 100px;
+    background: violet;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+}
+
+.navbar-logo {
+    width: 50px;
+    height: 50px;
+}
+
+.logo {
+    font-size: 32px;
+    color: aliceblue;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.Navbar a{
+    position: relative;
+    font-size: 18px;
+    color: aliceblue;
+    font-weight: 500;
+    text-decoration: none;
+    margin-left: 40px;
+    margin-bottom: 20px;
+}
+
+.Navbar a::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #fff;
+    transition: .3s
+}
+
+.Navbar a:hover::before {
+    width: 100%;
+}
+
+/*začátek footeru*/
+
+footer {
+    width: 100%;
+    background-color: violet;
+    padding: 10px 0;
+    text-align: center;
+    margin-top: auto;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    /*width: 100%; /* Zajišťuje, že kontejner pokrývá celou šířku stránky */
+    padding: 0 20px;
+    box-sizing: border-box; /* Zahrnuje padding do celkové šířky */
+}
+
+.footer-column {
+    flex: 1;
+    padding: 0 15px;
+}
+
+.footer-column p {
+    margin: 5px 0;
+}
+
+.footer-logo {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 10px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 10px; /* Mezera mezi ikonami */
+    justify-content: center;
+}
+
+.social-icons img {
+    width: 30px;
+    height: 30px;
+}
+
+.social-icons a {
+    display: inline-block;
+}
+
+.footer-column a {
+    display: block;
+    margin: 5px 0;
+    text-decoration: none;
+    color: #333;
+}
+
+.footer-column a:hover {
+    text-decoration: underline;
+}
+  /*konec footeru*/  
+
+textarea {
+	border-radius: 5px;
+	border: 1px solid #aaaaaa;
+	width: 483px;
+	height: 90px;
+}
+
+article {
+    margin-top: 20px;
+    padding: 20px; 
+}
+
+/*TADY ODTUD CHAT*/
+
+.form-container {
+    width: 300px;
+    padding: 20px;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    border: 2px solid #ff66b2;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #ff3385;
+}
+
+input, select {
+    width: 100%;
+    padding: 8px;
+    border: 2px solid #ff66b2;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    background-color: #ff66b2;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #e0559f;
+}
+
+/* Cena */
+.price {
+    margin-top: 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #cc0052;
+    text-align: center;
+}
+
+/* Tlačítko */
+.btn {
+    display: block;
+    width: 100%;
+    background-color: #ff3385;
+    color: white;
+    font-size: 1em;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: #e60073;
+}
+
+/*sablony vizitek*/
+
+.template {
+    display: inline-block;
+    margin: 15px;
+    text-align: center;
+}
+.template img {
+    width: 200px;
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.template h3 {
+    margin: 10px 0 5px;
+}
+.template p {
+    font-size: 14px;
+}

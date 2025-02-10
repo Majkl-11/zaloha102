@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="cs-cz">
+	<head>
+		<base href="/localhost" />
+		<meta charset="UTF-8" />
+		<title><?= $titulek ?></title>
+		<meta name="description" content="<?= $popis ?>" />
+		<meta name="keywords" content="<?= $klicova_slova ?>" />
+        <link rel="stylesheet" href="/style.css" type="text/css">
+    </head>
+
+<body>
+  
+    <header class="header">
+        <a href="uvod" class="logo"><img src = "img/logo.png" class="navbar-logo"></a>
+    
+        <nav class="Navbar">
+            <a href="uvod">Úvod</a>
+            <a href="kontakt">Kontakt</a>
+            <a href="sluzby">Služby</a>
+            <a href="sablony">Šablony</a>
+            <a href="objednat">Objednat</a>
+            <a href="obchodnipodminky">Obchodní podmínky</a>
+
+        </nav>
+        </header>
+        <br clear="both" />
+
+    
+
+    <article>
+    <?= isset($_SESSION['uzivatel'])?$_SESSION['uzivatel']['name']: 'Not log in'?>   
+        <?php $this->kontroler->vypisPohled();?>
+    </article>
+    
+    <footer>
+    <div class="footer-container">
+    <div class="footer-column">
+      <img src="img/logo.png" alt="Logo firmy" class="footer-logo">
+      <p>Telefon: +420 732 470 075</p>
+      <p>Email: vizitkycalek@gmail.com</p>
+      <div class="social-icons">
+        <a href="https://facebook.com" target="_blank">
+          <img src="img/facebook.png" alt="Facebook">
+        </a>
+        <a href="https://www.instagram.com/vizitky_calek/" target="_blank">
+          <img src="img/instagram.png" alt="Instagram">
+        </a>
+      </div>
+    </div>
+    <div class="footer-column">
+      <p>Michal Čalek</p>
+      <p>Uhlířské Janovice</p>
+      <p>Žižkova 13</p>
+      <p>285 04</p>
+    </div>
+    <div class="footer-column">
+      <a href="uvod">Úvod</a>
+      <a href="sluzby">Služby</a>
+      <a href="kontakt">Kontakt</a>
+      <a href="obchodnipodminky">Obchodní Podmínky</a>
+    </div>
+  </div>
+    </footer>
+</body>
+</html>
+    
