@@ -1,260 +1,348 @@
+/* RESET / ZÁKLADNÍ NASTAVENÍ
+-------------------------------------------- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
 }
 
-html, body {
-    height: 100%;
-    margin: 0;
+/* Tělo stránky */
+html {
+    font-size: 16px; /* Základ pro rem jednotky */
+    scroll-behavior: smooth;
 }
 
 body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: #fff;
+    line-height: 1.5;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    padding-top: 50px;
-    padding-bottom: 10px;
-    padding-left: 50px;
-    padding-right: 50px;
-    background-size: cover;
-    background-position: center;
-    line-height: 1.6;
-    margin: 0;
-
-
-
-    /*background-image: url('img/background.jpg');
-    background-size: cover; 
-    background-repeat: no-repeat; 
-    background-attachment: fixed; 
-    background-position: center;*/
-
+    min-height: 100vh; /* Pro fixaci/podsunutí patičky */
 }
 
-/*#login-form {
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}*/
-
-h1 {
-	text-align: center;
-	color: #444444;
-	text-shadow: 3px 3px 3px #aaaaaa;
+/* ODKAZY */
+a {
+    color: #007bff;
+    text-decoration: none;
 }
 
+a:hover {
+    text-decoration: underline;
+}
+
+/* HLAVIČKA, NAVIGACE
+-------------------------------------------- */
 .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 20px 100px;
-    background: violet;
+    background-color: #f5f5f5;
+    padding: 1rem;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    z-index: 1000;
+    justify-content: space-between;
 }
 
-.navbar-logo {
-    width: 50px;
-    height: 50px;
+/* Logo */
+.header .logo {
+    display: flex;
+    align-items: center;
+}
+.header .navbar-logo {
+    max-height: 50px; /* úprava výšky loga */
 }
 
-.logo {
-    font-size: 32px;
-    color: aliceblue;
-    text-decoration: none;
-    font-weight: 700;
+/* Navbar odkazy */
+.Navbar {
+    display: flex;
+    flex-wrap: wrap;       /* Způsobí, že odkazy se na menších displejích zalomí */
+    justify-content: flex-end;
 }
 
-.Navbar a{
-    position: relative;
-    font-size: 18px;
-    color: aliceblue;
+.Navbar a {
+    margin: 0 1rem;
+    color: #333;
     font-weight: 500;
-    text-decoration: none;
-    margin-left: 40px;
-    margin-bottom: 20px;
+    transition: color 0.2s ease-in-out;
 }
 
-.Navbar a::before {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: #fff;
-    transition: .3s
+.Navbar a:hover {
+    color: #007bff;
 }
 
-.Navbar a:hover::before {
+/* HLAVNÍ OBSAH
+-------------------------------------------- */
+article {
+    flex: 1; /* Zabírá zbývající prostor, aby footer byl dole */
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* NADPISY, TEXT, TABULKY
+-------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+/* Tabulka pro seznam článků */
+table {
     width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
 }
 
-/*začátek footeru*/
+table td, table th {
+    border: 1px solid #ddd;
+    padding: 0.75rem;
+}
 
+/* FORMULÁŘE
+-------------------------------------------- */
+form {
+    margin-bottom: 2rem; /* Odstup od dalšího obsahu */
+    max-width: 600px;
+}
+
+label {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea,
+select {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font: inherit;
+}
+
+textarea {
+    min-height: 100px;
+}
+
+input[type="submit"],
+button[type="submit"],
+.btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 0.7rem 1.2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font: inherit;
+    transition: background-color 0.2s ease-in-out;
+}
+
+input[type="submit"]:hover,
+button[type="submit"]:hover,
+.btn:hover {
+    background-color: #0056b3;
+}
+
+/* Specifické třídy formulářů */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+/* Cena v objednávkovém formuláři */
+.price {
+    margin: 1rem 0;
+    font-weight: bold;
+}
+
+/* FOOTER
+-------------------------------------------- */
 footer {
-    width: 100%;
-    background-color: violet;
-    padding: 10px 0;
-    text-align: center;
-    margin-top: auto;
+    background-color: #202020;
+    color: #fff;
+    padding: 2rem 1rem;
 }
 
 .footer-container {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
-    /*width: 100%; /* Zajišťuje, že kontejner pokrývá celou šířku stránky */
-    padding: 0 20px;
-    box-sizing: border-box; /* Zahrnuje padding do celkové šířky */
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .footer-column {
-    flex: 1;
-    padding: 0 15px;
-}
-
-.footer-column p {
-    margin: 5px 0;
+    flex: 1 1 200px;
+    margin: 1rem;
 }
 
 .footer-logo {
-    width: 30px;
-    height: 30px;
-    margin-bottom: 10px;
+    max-width: 120px;
+    margin-bottom: 1rem;
+}
+
+.footer-column p,
+.footer-column a {
+    margin-bottom: 0.5rem;
+}
+
+.footer-column a {
+    color: #fff;
 }
 
 .social-icons {
     display: flex;
-    gap: 10px; /* Mezera mezi ikonami */
-    justify-content: center;
+    gap: 1rem;
 }
 
 .social-icons img {
-    width: 30px;
-    height: 30px;
+    width: 24px;
+    height: 24px;
 }
 
-.social-icons a {
-    display: inline-block;
+/* ŠABLONY VIZITEK
+-------------------------------------------- */
+.templates {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
 }
-
-.footer-column a {
-    display: block;
-    margin: 5px 0;
-    text-decoration: none;
-    color: #333;
-}
-
-.footer-column a:hover {
-    text-decoration: underline;
-}
-  /*konec footeru*/  
-
-textarea {
-	border-radius: 5px;
-	border: 1px solid #aaaaaa;
-	width: 483px;
-	height: 90px;
-}
-
-article {
-    margin-top: 20px;
-    padding: 20px; 
-}
-
-/*TADY ODTUD CHAT*/
-
-.form-container {
-    width: 300px;
-    padding: 20px;
-    transform: translate(-50%, -50%);
-    background-color: #ffffff;
-    border: 2px solid #ff66b2;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
-    text-align: center;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: bold;
-    color: #ff3385;
-}
-
-input, select {
-    width: 100%;
-    padding: 8px;
-    border: 2px solid #ff66b2;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-input[type="submit"] {
-    background-color: #ff66b2;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-input[type="submit"]:hover {
-    background-color: #e0559f;
-}
-
-/* Cena */
-.price {
-    margin-top: 20px;
-    font-size: 1.2em;
-    font-weight: bold;
-    color: #cc0052;
-    text-align: center;
-}
-
-/* Tlačítko */
-.btn {
-    display: block;
-    width: 100%;
-    background-color: #ff3385;
-    color: white;
-    font-size: 1em;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-}
-
-.btn:hover {
-    background-color: #e60073;
-}
-
-/*sablony vizitek*/
 
 .template {
-    display: inline-block;
-    margin: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 1rem;
+    width: calc(33.333% - 2rem);
+    box-sizing: border-box;
     text-align: center;
 }
+
 .template img {
-    width: 200px;
+    max-width: 100%;
     height: auto;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    margin-bottom: 1rem;
 }
+
 .template h3 {
-    margin: 10px 0 5px;
+    margin-bottom: 0.5rem;
 }
-.template p {
-    font-size: 14px;
+
+/* MEDIA QUERIES (RESPONZIVITA)
+-------------------------------------------- */
+/* Střední displeje */
+@media (max-width: 992px) {
+    .Navbar {
+        /* Případně můžeš definovat jiné chování
+           nebo upravit margin pro odkazy */
+    }
+    .Navbar a {
+        margin: 0.5rem 1rem;
+    }
+}
+
+/* Menší displeje */
+@media (max-width: 768px) {
+    .template {
+        width: calc(50% - 2rem);
+    }
+}
+
+/* Nejmenší displeje */
+@media (max-width: 480px) {
+    header.header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .Navbar {
+        justify-content: flex-start; 
+        flex-direction: column;
+    }
+
+    .Navbar a {
+        margin: 0.5rem 0;
+    }
+
+    .template {
+        width: 100%;
+        margin: 0;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* DARK MODE (automatické přes systémové nastavení)
+-------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #121212;
+        color: #ddd; 
+    }
+
+    .header {
+        background-color: #222;
+    }
+
+    .Navbar a {
+        color: #fff;
+    }
+
+    .Navbar a:hover {
+        color: #bbb;
+    }
+
+    article {
+        color: #ddd;
+    }
+    article h1, article h2, article h3, article h4, article h5, article h6 {
+        color: #ffffff;
+    }
+
+    /* Odkazy */
+    a {
+        color: #79bbff;
+    }
+    a:hover {
+        color: #a3caff;
+    }
+
+    /* Tlačítka */
+    input[type="submit"],
+    button[type="submit"],
+    .btn {
+        background-color: #333;
+        color: #fff;
+    }
+    input[type="submit"]:hover,
+    button[type="submit"]:hover,
+    .btn:hover {
+        background-color: #444;
+    }
+
+    /* Tabulka */
+    table td, table th {
+        border-color: #444;
+    }
+
+    /* Footer */
+    footer {
+        background-color: #181818;
+    }
+    .footer-column a, .footer-column p {
+        color: #ccc;
+    }
+    .footer-logo {
+        filter: brightness(0.8);
+    }
 }
