@@ -26,12 +26,14 @@
         </header>
         <br clear="both" />
 
-    
+
 
     <article>
     <?= isset($_SESSION['uzivatel'])?$_SESSION['uzivatel']['name']: 'Not log in'?>   
         <?php $this->kontroler->vypisPohled();?>
     </article>
+
+
     
     <footer>
     <div class="footer-container">

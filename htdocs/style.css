@@ -10,6 +10,7 @@
 html {
     font-size: 16px; /* Základ pro rem jednotky */
     scroll-behavior: smooth;
+    overflow-y: scroll;
 }
 
 body {
@@ -19,7 +20,8 @@ body {
     line-height: 1.5;
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Pro fixaci/podsunutí patičky */
+    min-height: 100vh; /* zajistí, že tělo stránky bude alespoň tak vysoké jako okno */
+    overflow-x: hidden; /* zakáže horizontální scrollování */
 }
 
 /* ODKAZY */
@@ -31,6 +33,23 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
+/* SCROLLBAR
+-------------------------------------------- */
+::-webkit-scrollbar {
+    width: 0px; /* šířka scrollbaru */
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #aaaaaa00; /* barva posuvníku */
+    border-radius: 4px; /* zaoblení rohů posuvníku */
+}
+
+::-webkit-scrollbar-track {
+    background-color: #aaaaaa00; /* barva pozadí scrollbaru */
+}
+
 
 /* HLAVIČKA, NAVIGACE
 -------------------------------------------- */
@@ -59,23 +78,42 @@ a:hover {
 }
 
 .Navbar a {
+    position: relative;
     margin: 0 1rem;
-    color: #333;
+    color: #333; /* Ponechání původní barvy */
     font-weight: 500;
+    text-decoration: none; /* Zabránění standardnímu podtržení */
     transition: color 0.2s ease-in-out;
 }
 
+.Navbar a::before {
+    content: '';
+    position: absolute;
+    bottom: -2px; /* Zajištění podtržení pod textem */
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #333; /* Podtržení bude černé místo modrého */
+    transition: width 0.3s ease-in-out;
+}
+
 .Navbar a:hover {
-    color: #007bff;
+    color: #333; /* Při najetí zůstane původní barva */
+}
+
+.Navbar a:hover::before {
+    width: 100%;
 }
 
 /* HLAVNÍ OBSAH
 -------------------------------------------- */
 article {
-    flex: 1; /* Zabírá zbývající prostor, aby footer byl dole */
+    flex: 1;
     padding: 1rem;
     max-width: 1200px;
     margin: 0 auto;
+    overflow-y: auto;
+    max-height: calc(100vh - 98px); /* Výška článku s ohledem na header a footer */
 }
 
 /* NADPISY, TEXT, TABULKY
@@ -167,7 +205,8 @@ button[type="submit"]:hover,
 -------------------------------------------- */
 footer {
     background-color: #202020;
-    color: #fff;
+    color: white;
+    text-align: center;
     padding: 2rem 1rem;
 }
 
@@ -185,8 +224,8 @@ footer {
 }
 
 .footer-logo {
-    max-width: 120px;
-    margin-bottom: 1rem;
+    max-width: 90px;
+    /*margin-bottom: 1rem;*/
 }
 
 .footer-column p,
@@ -196,11 +235,19 @@ footer {
 
 .footer-column a {
     color: #fff;
+    display: block;
+    margin: 5px 0;
+    text-decoration: none;
+}
+
+.footer-column a:hover {
+    text-decoration: underline;
 }
 
 .social-icons {
     display: flex;
     gap: 1rem;
+    justify-content: center;
 }
 
 .social-icons img {
