@@ -31,19 +31,20 @@ class ObjednatKontroler extends Kontroler
             $quantity = $_POST['quantity'];
             $paperTypeId = $_POST['paperType'];
             $printTypeId = $_POST['printType'];
-            $dimensionId = $_POST['dimension'];
+            $measurementId = $_POST['measurement'];
 
             // Získání cen z modelů
             $paperTypePrice = PaperTypeModel::getPriceById($paperTypeId);
             $printTypePrice = PrintModel::getPriceById($printTypeId);
-            $dimensionPrice = MeasurementModel::getPriceById($dimensionId);
+            $measurementPrice = MeasurementModel::getPriceById($measurementId);
+            $cardTemplatePrice = CardTemplateModel::getPriceById($measurementId);
 
             // Výpočet ceny
-            $price = ($paperTypePrice + $printTypePrice + $dimensionPrice) * $quantity;
+            $price = ($paperTypePrice + $printTypePrice + $measurementPrice + $cardTemplatePrice) * $quantity;
 
             // Připočítání DPH
             $priceWithVat = $price * 1.21;
-
+            
             // Výstup ceny
             echo number_format($priceWithVat, 2);
         }

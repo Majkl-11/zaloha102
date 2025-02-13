@@ -12,6 +12,7 @@
 <body>
   
     <header class="header">
+
         <a href="uvod" class="logo"><img src = "img/logo.png" class="navbar-logo"></a>
     
         <nav class="Navbar">
@@ -26,7 +27,9 @@
         </header>
         <br clear="both" />
 
-
+        <?php foreach ($zpravy as $zprava) : ?>
+                  <p class="zprava"><?= $zprava ?></p>
+                <?php endforeach ?>
 
     <article>
     <?= isset($_SESSION['uzivatel'])?$_SESSION['uzivatel']['name']: 'Not log in'?>   
