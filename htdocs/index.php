@@ -15,7 +15,7 @@ function autoloadFunkce(string $trida): void
 
 spl_autoload_register("autoloadFunkce");
 
-Db::pripoj("127.0.0.1", "root", "", "mydb");
+Db::pripoj("student.voskh.cz", "calekmichal215", "@motorka19", "calekmichal215");
 
 $smerovac = new SmerovacKontroler();
 $smerovac->zpracuj(array($_SERVER['REQUEST_URI']));

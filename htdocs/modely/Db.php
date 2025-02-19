@@ -10,8 +10,24 @@ class Db {
         PDO::ATTR_EMULATE_PREPARES => false,
     );
 
-    public static function pripoj(string $host, string $uzivatel, string $heslo, string $databaze): PDO
+    public static function pripoj(): PDO
     {
+        if (!isset(self::$spojeni)) {
+            try {
+                self::$spojeni = new PDO(
+                    "mysql:host=student.voskh.cz;dbname=calekmichal215;charset=utf8",
+                    "calekmichal215",
+                    "@motorka19",
+                    self::$nastaveni
+                );
+            } catch (PDOException $e) {
+                die('Nepodařilo se připojit k databázi: ' . $e->getMessage());
+            }
+        }
+        return self::$spojeni;
+
+        /*
+        public static function pripoj(string $host, string $uzivatel, string $heslo, string $databaze) : PDO
         if (!isset(self::$spojeni)) {
             try {
                 self::$spojeni = new PDO(
@@ -24,7 +40,7 @@ class Db {
                 throw new Exception('Nepodařilo se připojit k databázi: ' . $e->getMessage());
             }
         }
-        return self::$spojeni;
+        return self::$spojeni;*/
     }
 
     public static function dotazJeden(string $dotaz, array $parametry = array()): array|bool
