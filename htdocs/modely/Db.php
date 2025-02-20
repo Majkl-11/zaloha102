@@ -40,7 +40,9 @@ class Db {
                 throw new Exception('Nepodařilo se připojit k databázi: ' . $e->getMessage());
             }
         }
-        return self::$spojeni;*/
+        return self::$spojeni;
+        */
+        
     }
 
     public static function dotazJeden(string $dotaz, array $parametry = array()): array|bool
