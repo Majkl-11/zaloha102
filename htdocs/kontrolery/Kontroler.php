@@ -7,6 +7,11 @@ abstract class Kontroler
 
 	protected array $hlavicka = array('titulek' => '', 'klicova_slova' => '', 'popis' => '');
 
+	// Definice typů zpráv
+	const ZPRAVA_OK = 'ok';
+	const ZPRAVA_CHYBA = 'chyba';
+	const ZPRAVA_INFO = 'info';
+
 	private function osetri(mixed $x = null): mixed
 	{
 		if (!isset($x))
@@ -22,24 +27,26 @@ abstract class Kontroler
 			return $x;
 	}
 
-    public function vypisPohled(): void
-    {
-        if ($this->pohled) {
-            extract($this->osetri($this->data));
-			extract($this->data, EXTR_PREFIX_ALL, "");
-            require("pohledy/" . $this->pohled . ".phtml");
-        }
-    }
-
-	public function pridejZpravu(string $zprava): void
+	public function vypisPohled(): void
 	{
-		if (isset($_SESSION['zpravy']))
-			$_SESSION['zpravy'][] = $zprava;
-		else
-			$_SESSION['zpravy'] = array($zprava);
+		if ($this->pohled) {
+			extract($this->osetri($this->data));
+			extract($this->data, EXTR_PREFIX_ALL, "");
+			require("pohledy/" . $this->pohled . ".phtml");
+		}
 	}
-	
-	
+
+	// Upravená funkce pro přidání zprávy s typem
+	public function pridejZpravu(string $zprava, string $typ = self::ZPRAVA_INFO): void
+	{
+		$novaZprava = ['text' => $zprava, 'typ' => $typ];
+
+		if (isset($_SESSION['zpravy']))
+			$_SESSION['zpravy'][] = $novaZprava;
+		else
+			$_SESSION['zpravy'] = [$novaZprava];
+	}
+
 	public function vratZpravy(): array
 	{
 		if (isset($_SESSION['zpravy'])) {
@@ -47,15 +54,14 @@ abstract class Kontroler
 			unset($_SESSION['zpravy']);
 			return $zpravy;
 		} else
-			return array();
+			return [];
 	}
-
 
 	public function presmeruj(string $url): never
 	{
 		header("Location: /$url");
 		header("Connection: close");
-		exit;
+		//exit;
 	}
 
 	public function overUzivatele(bool $admin = false): void
@@ -63,13 +69,10 @@ abstract class Kontroler
 		$spravceUzivatelu = new SpravceUzivatelu();
 		$uzivatel = $spravceUzivatelu->vratUzivatele();
 		if (!$uzivatel || ($admin && !$uzivatel['admin'])) {
-			$this->pridejZpravu('Nedostatečná oprávnění.');
+			$this->pridejZpravu('Nedostatečná oprávnění.', self::ZPRAVA_CHYBA);
 			$this->presmeruj('prihlaseni');
 		}
 	}
 
 	abstract function zpracuj(array $parametry): void;
-
-
-	
 }

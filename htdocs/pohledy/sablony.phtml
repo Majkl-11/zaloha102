@@ -1,10 +1,49 @@
 <h1>Šablony vizitek</h1>
-    <div class="templates">
-        <?php foreach ($sablony as $sablona): ?>
-            <div class="template">
-                <img src="<?= htmlspecialchars($sablona['picture']) ?>" alt="<?= htmlspecialchars($sablona['name']) ?>">
-                <h3><?= htmlspecialchars($sablona['name']) ?></h3>
-                <p><?= htmlspecialchars($sablona['description']) ?></p>
-            </div>
-        <?php endforeach; ?>
-    </div>
+
+<!-- Výpis šablon -->
+<div class="templates">
+    <?php foreach ($sablony as $sablona): ?>
+        <div class="template">
+            <img src="<?= ($sablona['picture']) ?>" alt="<?= ($sablona['name']) ?>">
+            <h3><?= ($sablona['name']) ?></h3>
+            <p><?= ($sablona['description']) ?></p>
+            <p><strong>Cena:</strong> <?= ($sablona['price']) ?> Kč</p>
+
+            <?php if (isset($_SESSION['uzivatel']) && $_SESSION['uzivatel']['admin'] == 1): ?>
+                <!-- Formulář pro smazání šablony -->
+                <form action="/sablony/delete" method="post" style="display:inline;" onsubmit="return potvrditSmazani();">
+                    <input type="hidden" name="id" value="<?= ($sablona['idcard_template']) ?>">
+                    <button type="submit">Smazat</button>
+                </form>
+            <?php endif; ?>
+        </div>
+    <?php endforeach; ?>
+</div>
+
+<br>
+
+<?php if (isset($_SESSION['uzivatel']) && $_SESSION['uzivatel']['admin'] == 1): ?>
+    <h1>Vkládání šablon</h1>
+    <!-- Formulář pro nahrání nové šablony (vidí jen admin) -->
+    <form action="" method="post" enctype="multipart/form-data">
+        <label for="name">Název:</label>
+        <input type="text" name="name" id="name" required>
+
+        <label for="description">Popis:</label>
+        <textarea name="description" id="description" required></textarea>
+
+        <label for="price">Cena:</label>
+        <input type="number" name="price" id="price" step="0.01" required>
+
+        <label for="picture">Obrázek:</label>
+        <input type="file" name="picture" id="picture" accept="image/*" required>
+
+        <button type="submit">Nahrát šablonu</button>
+    </form>
+<?php endif; ?>
+
+<script>
+    function potvrditSmazani() {
+        return confirm('Opravdu chcete tuto šablonu odstranit? Tuto akci nelze vrátit.');
+    }
+</script>

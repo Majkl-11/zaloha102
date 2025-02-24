@@ -21,14 +21,14 @@ class EditorKontroler extends Kontroler
 			$klice = array('titulek', 'obsah', 'url', 'popisek', 'klicova_slova');
 			$clanek = array_intersect_key($_POST, array_flip($klice));
 			$spravceClanku->ulozClanek($_POST['clanky_id'], $clanek);
-			$this->pridejZpravu('Článek byl úspěšně uložen.');
+			$this->pridejZpravu('Článek byl úspěšně uložen.', self::ZPRAVA_OK);
 			$this->presmeruj('clanek/' . $clanek['url']);
 		} else if (!empty($parametry[0])) {
 			$nactenyClanek = $spravceClanku->vratClanek($parametry[0]);
 			if ($nactenyClanek)
 				$clanek = $nactenyClanek;
 			else
-				$this->pridejZpravu('Článek nebyl nalezen');
+			$this->pridejZpravu('Článek nebyl nalezen', self::ZPRAVA_CHYBA);
 		}
 
 		$this->data['clanek'] = $clanek;

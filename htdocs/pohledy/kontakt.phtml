@@ -2,22 +2,22 @@
 
 <p>Kontaktujte nás odesláním formuláře níže.</p>
 
-<form method="post" id="form-email">
-	<label>
-		Vaše emailová adresa<br />
-		<input type="email" name="email" required="required" value="<?php if (isset($_POST['email'])) echo(htmlspecialchars($_POST['email'])); ?>" />
-	</label><br />
-	<label>
-		Antispam - zadejte aktuální rok<br />
-		<input type="text" name="rok" required="required" />
-	</label><br />
-	<label>
-		<textarea name="zprava"><?php if (isset($_POST['zprava'])) echo(htmlspecialchars($_POST['zprava'])); ?></textarea>
-	</label><br />
-	<input type="submit" value="Odeslat" />
+<form method="post" action="mailer_kontakt.php" id="form-email">
+    <label>
+        Vaše emailová adresa<br />
+        <input type="email" name="email" required value="<?php if (isset($_POST['email'])) echo(htmlspecialchars($_POST['email'])); ?>" />
+    </label><br />
+    
+    <label>
+        Antispam - zadejte aktuální rok<br />
+        <input type="text" name="rok" required />
+    </label><br />
+    
+    <label>
+        Zpráva<br />
+        <textarea name="zprava" required><?php if (isset($_POST['zprava'])) echo(htmlspecialchars($_POST['zprava'])); ?></textarea>
+    </label><br />
+    
+    <input type="submit" value="Odeslat" />
 </form>
 <br>
-
-<h1>Kontakt na nás</h1>
-<p>Telefonní číslo: 732 470 075</p>
-<p>e-mail: michalcalekadc@gmail.com</p>

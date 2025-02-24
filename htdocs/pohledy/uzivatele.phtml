@@ -1,0 +1,40 @@
+<h1>Správa uživatelů</h1>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Jméno</th>
+        <th>Email</th>
+        <th>Admin</th>
+        <th>Akce</th>
+    </tr>
+    <?php foreach ($seznamUzivatelu as $uzivatel): ?>
+        <tr>
+            <td><?= htmlspecialchars($uzivatel['iduser']) ?></td>
+            <td><?= htmlspecialchars($uzivatel['name']) ?></td>
+            <td><?= htmlspecialchars($uzivatel['email']) ?></td>
+            <td><?= $uzivatel['admin'] ? 'Ano' : 'Ne' ?></td>
+            <td>
+                <?php if ($uzivatel['iduser'] !== $_SESSION['uzivatel']['iduser']): ?>
+                    <!-- Formulář pro změnu admin práv -->
+                    <form action="" method="post" style="display:inline;">
+                        <input type="hidden" name="iduser" value="<?= $uzivatel['iduser'] ?>">
+                        <select name="admin">
+                            <option value="1" <?= $uzivatel['admin'] ? 'selected' : '' ?>>Admin</option>
+                            <option value="0" <?= !$uzivatel['admin'] ? 'selected' : '' ?>>Uživatel</option>
+                        </select>
+                        <button type="submit" name="zmenit_prava">Upravit</button>
+                    </form>
+
+                    <!-- Formulář pro smazání uživatele -->
+                    <form action="" method="post" style="display:inline;" onsubmit="return confirm('Opravdu chcete tohoto uživatele smazat?');">
+                        <input type="hidden" name="iduser" value="<?= $uzivatel['iduser'] ?>">
+                        <button type="submit" name="smazat">Smazat</button>
+                    </form>
+                <?php else: ?>
+                    <em>(Nelze upravit nebo smazat sám sebe)</em>
+                <?php endif; ?>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</table>

@@ -65,3 +65,5 @@ class SpravceUzivatelu
         return $_SESSION['uzivatel'] ?? null;
     }
 }
+
+//

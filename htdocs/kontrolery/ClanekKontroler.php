@@ -13,7 +13,7 @@ class ClanekKontroler extends Kontroler
 		if (!empty($parametry[1]) && $parametry[1] == 'odstranit') {
 			$this->overUzivatele(true);
 			$spravceClanku->odstranClanek($parametry[0]);
-			$this->pridejZpravu('Článek byl úspěšně odstraněn');
+			$this->pridejZpravu('Článek byl úspěšně odstraněn', self::ZPRAVA_OK);
 			$this->presmeruj('clanek');
 		} else if (!empty($parametry[0])) {
 			$clanek = $spravceClanku->vratClanek($parametry[0]);

@@ -16,10 +16,10 @@ class KontaktKontroler extends Kontroler
 			try {
 				$odesilacEmailu = new OdesilacEmailu();
 				$odesilacEmailu->odesliSAntispamem($_POST['rok'], "admin@adresa.cz", "Email z webu", $_POST['zprava'], $_POST['email']);
-				$this->pridejZpravu('Email byl úspěšně odeslán.');
+				$this->pridejZpravu('Email byl úspěšně odeslán.', self::ZPRAVA_OK);
 				$this->presmeruj('kontakt');
 			} catch (ChybaUzivatele $chyba) {
-				$this->pridejZpravu($chyba->getMessage());
+				$this->pridejZpravu($chyba->getMessage(), self::ZPRAVA_CHYBA);
 			}
 		}
 		
