@@ -1,0 +1,49 @@
+<h1>Správa objednávek</h1>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Datum objednávky</th>
+        <th>Cena</th>
+        <th>Množství</th>
+        <th>Šablona</th>
+        <th>Papír</th>
+        <th>Tisk</th>
+        <th>Rozměr</th>
+        <th>Email</th>
+        <th>Firma</th>
+        <th>Telefon</th>
+        <th>Logo</th>
+        <th>Akce</th>
+    </tr>
+
+    <?php foreach ($seznamObjednavek as $objednavka): ?>
+        <tr>
+            <td><?= ($objednavka['idorder']) ?></td>
+            <td><?= ($objednavka['order_date']) ?></td>
+            <td><?= ($objednavka['price']) ?></td>
+            <td><?= ($objednavka['quantity']) ?></td>
+            <td><?= ($objednavka['idcard_template']) ?></td>
+            <td><?= ($objednavka['idpaper_type']) ?></td>
+            <td><?= ($objednavka['idprint']) ?></td>
+            <td><?= ($objednavka['idmeasurement']) ?></td>
+            <td><?= ($objednavka['email']) ?></td>
+            <td><?= ($objednavka['company_name']) ?></td>
+            <td><?= ($objednavka['phone_number']) ?></td>
+            <td>
+                <?php if (!empty($objednavka['logo'])): ?>
+                    <img src="<?= ($objednavka['logo']) ?>" alt="Logo" width="50">
+                <?php else: ?>
+                    -
+                <?php endif; ?>
+            </td>
+            <td>
+                <!-- Formulář pro smazání objednávky -->
+                <form action="" method="post" style="display:inline;" onsubmit="return confirm('Opravdu chcete tuto objednávku smazat?');">
+                    <input type="hidden" name="idorder" value="<?= ($objednavka['idorder']) ?>">
+                    <button type="submit" name="smazat">Smazat</button>
+                </form>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</table>

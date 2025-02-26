@@ -131,6 +131,44 @@ a:hover {
     width: 100%;
 }
 
+.user-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.user-icon {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    min-width: 150px;
+}
+
+.dropdown a {
+    display: block;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: black;
+}
+
+.dropdown a:hover {
+    background-color: #f1f1f1;
+}
+
+.user-menu:hover .dropdown {
+    display: block;
+}
+
 /* HLAVNÍ OBSAH
 -------------------------------------------- */
 article {
@@ -139,7 +177,8 @@ article {
     max-width: 1200px;
     margin: 0 auto;
     overflow-y: auto;
-    max-height: calc(100vh - 98px); /* Výška článku s ohledem na header a footer */
+    /*max-height: calc(100vh - 98px); /* Výška článku s ohledem na header a footer */
+    min-height: 100vh;
 }
 
 /* NADPISY, TEXT, TABULKY

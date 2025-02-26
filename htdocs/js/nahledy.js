@@ -3,9 +3,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const templateSelect = document.getElementById("template");
     const priceElement = document.getElementById("price");
     const orderButton = document.getElementById("orderButton");
-    const orderMessage = document.getElementById("orderMessage");
+    const logoInput = document.getElementById("logo");
 
-    // Funkce pro změnu mini náhledu šablony 
     templateSelect.addEventListener("change", function () {
         const selectedOption = this.options[this.selectedIndex];
         const imageUrl = selectedOption.getAttribute("data-image");
@@ -19,7 +18,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // AJAX požadavek pro výpočet ceny
     form.addEventListener("change", function () {
         const quantity = document.getElementById("quantity").value;
         const paperType = document.getElementById("paperType").value;
@@ -42,62 +40,25 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .then(response => response.json()) 
             .then(data => {
-                if (data.price) {
-                    let formattedPrice = new Intl.NumberFormat("cs-CZ", {
-                        style: "currency",
-                        currency: "CZK"
-                    }).format(parseFloat(data.price));
-
-                    priceElement.innerText = formattedPrice;
-                } else {
-                    priceElement.innerText = "0 Kč";
-                }
-            })
-            .catch(error => console.error("Chyba při načítání ceny:", error));
+                priceElement.innerText = data.price ? `${parseFloat(data.price).toFixed(2)} Kč` : "0 Kč";
+            });
         } else {
             priceElement.innerText = "0 Kč";
         }
     });
-    
-    // Odesílání objednávky do databáze po kliknutí na tlačítko "Objednat"
-    orderButton.addEventListener("click", function () {
-        const quantity = document.getElementById("quantity").value;
-        const paperType = document.getElementById("paperType").value;
-        const printType = document.getElementById("printType").value;
-        const measurement = document.getElementById("measurement").value;
-        const template = templateSelect.value;
-        const price = parseFloat(priceElement.innerText.replace(/[^\d,]/g, '').replace(',', '.'));
 
-        if (quantity > 0 && paperType && printType && measurement && template && price > 0) {
-            const data = new URLSearchParams();
-            data.append("quantity", quantity);
-            data.append("paperType", paperType);
-            data.append("printType", printType);
-            data.append("measurement", measurement);
-            data.append("template", template);
-            data.append("price", price);
+    orderButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        const formData = new FormData(form);
+        formData.append("price", priceElement.innerText.replace(" Kč", "").trim());
 
-            fetch("?c=objednat&a=createOrder", {
-                method: "POST",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: data
-            })
-            .then(response => response.json())
-            .then(data => {
-                orderMessage.innerText = data.message;
-                orderMessage.style.color = data.success ? "green" : "red";
-            })
-            .catch(error => {
-                orderMessage.innerText = "Chyba při odesílání objednávky!";
-                orderMessage.style.color = "red";
-                console.error("Chyba:", error);
-            });
-        } else {
-            orderMessage.innerText = "Vyplňte všechna pole a zkontrolujte cenu!";
-            orderMessage.style.color = "red";
-        }
+        fetch("?c=objednat&a=createOrder", {
+            method: "POST",
+            body: formData
+        })
+        .then(() => location.reload()) // Okamžitý refresh stránky po odeslání formuláře
+        .catch(() => location.reload()); // I v případě chyby refresh
     });
 
-    // Inicializace náhledu šablony při načtení stránky
     templateSelect.dispatchEvent(new Event("change"));
 });

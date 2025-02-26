@@ -23,7 +23,7 @@ class RegistraceKontroler extends Kontroler
                 $spravceUzivatelu->prihlas($email, $heslo);
 
                 // Zavolání maileru
-                require_once 'mailer/mailer_registrace.php';
+                require_once 'mailer_registrace.php';
                 if (odeslatRegistracniEmail($email, $jmeno)) {
                     $this->pridejZpravu('Byl jste úspěšně zaregistrován.', self::ZPRAVA_OK);
                 } else {
@@ -39,3 +39,4 @@ class RegistraceKontroler extends Kontroler
         $this->pohled = 'registrace';
     }
 }
+

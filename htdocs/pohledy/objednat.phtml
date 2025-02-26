@@ -1,8 +1,8 @@
 <h1>Objednávka vizitek</h1>
-<form id="businessCardForm">
+<form id="businessCardForm" enctype="multipart/form-data">
     <div class="form-group">
         <label for="quantity">Počet vizitek:</label>
-        <input type="number" min="0" step="0,1" id="quantity" name="quantity" placeholder="Zadejte počet vizitek" required>
+        <input type="number" min="1" step="1" id="quantity" name="quantity" placeholder="Zadejte počet vizitek" required>
     </div>
 
     <div class="form-group">
@@ -37,7 +37,7 @@
         <select id="template" name="template" required>
             <?php foreach ($this->cardTemplates as $template): ?>
                 <option value="<?= $template['idcard_template'] ?>" data-image="<?= $template['picture'] ?>">
-                    <?= $template['name'] ?>
+                <?= $template['name'] ?>
                 </option>
             <?php endforeach; ?>
         </select>
@@ -48,12 +48,32 @@
         <img id="templatePreviewImage" src="" alt="Mini náhled šablony" width="100">
     </div>
 
+    <div class="form-group">
+        <label for="companyName">Jméno/Název společnosti:</label>
+        <input type="text" id="companyName" name="companyName" placeholder="Zadejte jméno nebo název společnosti" required>
+    </div>
+
+    <div class="form-group">
+        <label for="phoneNumber">Telefonní číslo:</label>
+        <input type="text" id="phoneNumber" name="phoneNumber" placeholder="Zadejte telefonní číslo" required>
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Zadejte email" required>
+    </div>
+
+    <div class="form-group">
+        <label for="logo">Nahrát logo:</label>
+        <input type="file" id="logo" name="logo" accept="image/*" required>
+    </div>
+
     <div class="price">
         Cena: <span id="price">0 Kč</span>
     </div>
 
-    <button id="orderButton" type="submit" class="btn">Objednat</button>
+    <button id="orderButton" type="button" class="btn">Objednat</button>
 </form>
 
-<script src="js/nahledy.js">
-</script>
+<script src="js/nahledy.js"></script>
+

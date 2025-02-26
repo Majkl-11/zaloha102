@@ -1,11 +1,12 @@
 <h1>Kontaktní formulář</h1>
 
-<p>Kontaktujte nás odesláním formuláře níže.</p>
+<p>Pokud máte jakejkoliv dotaz, neváhejte nás kontaktovat!</p>
+<p>Na váš dotaz vám odpovíme do 3 pracovních dnů.</p>
 
 <form method="post" action="mailer_kontakt.php" id="form-email">
     <label>
         Vaše emailová adresa<br />
-        <input type="email" name="email" required value="<?php if (isset($_POST['email'])) echo(htmlspecialchars($_POST['email'])); ?>" />
+        <input type="email" name="email" required value="<?php if (isset($_POST['email'])) echo(($_POST['email'])); ?>" />
     </label><br />
     
     <label>
@@ -15,7 +16,7 @@
     
     <label>
         Zpráva<br />
-        <textarea name="zprava" required><?php if (isset($_POST['zprava'])) echo(htmlspecialchars($_POST['zprava'])); ?></textarea>
+        <textarea name="zprava" required><?php if (isset($_POST['zprava'])) echo(($_POST['zprava'])); ?></textarea>
     </label><br />
     
     <input type="submit" value="Odeslat" />

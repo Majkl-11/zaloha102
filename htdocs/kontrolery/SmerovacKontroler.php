@@ -76,6 +76,7 @@ class SmerovacKontroler extends Kontroler
         $spravceUzivatelu = new SpravceUzivatelu();
         $spravceUzivatelu->odhlas();
         header('Location: /'); // Přesměrování na úvodní stránku
+        $this->pridejZpravu('Byl jste úspěsně odhlášen.', self::ZPRAVA_INFO);
         exit;
     }
 }

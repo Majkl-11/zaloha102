@@ -10,9 +10,9 @@
     </tr>
     <?php foreach ($seznamUzivatelu as $uzivatel): ?>
         <tr>
-            <td><?= htmlspecialchars($uzivatel['iduser']) ?></td>
-            <td><?= htmlspecialchars($uzivatel['name']) ?></td>
-            <td><?= htmlspecialchars($uzivatel['email']) ?></td>
+            <td><?= ($uzivatel['iduser']) ?></td>
+            <td><?= ($uzivatel['name']) ?></td>
+            <td><?= ($uzivatel['email']) ?></td>
             <td><?= $uzivatel['admin'] ? 'Ano' : 'Ne' ?></td>
             <td>
                 <?php if ($uzivatel['iduser'] !== $_SESSION['uzivatel']['iduser']): ?>

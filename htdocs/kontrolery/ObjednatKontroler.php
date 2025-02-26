@@ -14,84 +14,130 @@ class ObjednatKontroler extends Kontroler
         $this->printTypes = PrintModel::getAll();
         $this->measurements = MeasurementModel::getAll();
 
-        // Zobrazení pohledu
         $this->hlavicka = [
             'titulek' => 'Objednat',
-            'klicova_slova' => 'objednat, domovská stránka',
-            'popis' => 'Vytvoření objednávky.'
+            'klicova_slova' => 'objednat, tisk, vizitky',
+            'popis' => 'Vytvoření objednávky pro tisk vizitek.'
         ];
 
         $this->pohled = 'objednat';
     }
 
-    // Akce pro výpočet ceny
     public function calculatePriceAction(): void
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Získání dat z POST requestu
-            $quantity = (int) $_POST['quantity'];
-            $paperTypeId = (int) $_POST['paperType'];
-            $printTypeId = (int) $_POST['printType'];
-            $measurementId = (int) $_POST['measurement'];
-            $cardTemplateId = (int) $_POST['template'];
+        header('Content-Type: application/json');
 
-            // Získání cen z modelů
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $quantity = isset($_POST['quantity']) ? (int) $_POST['quantity'] : 0;
+            $paperTypeId = isset($_POST['paperType']) ? (int) $_POST['paperType'] : 0;
+            $printTypeId = isset($_POST['printType']) ? (int) $_POST['printType'] : 0;
+            $measurementId = isset($_POST['measurement']) ? (int) $_POST['measurement'] : 0;
+            $cardTemplateId = isset($_POST['template']) ? (int) $_POST['template'] : 0;
+
             $paperTypePrice = PaperTypeModel::getPriceById($paperTypeId);
             $printTypePrice = PrintModel::getPriceById($printTypeId);
             $measurementPrice = MeasurementModel::getPriceById($measurementId);
             $cardTemplatePrice = CardTemplateModel::getPriceById($cardTemplateId);
 
-            // Výpočet ceny
-            $price = ($paperTypePrice + $printTypePrice + $measurementPrice + $cardTemplatePrice) * $quantity;
+            if ($quantity > 0 && $paperTypePrice && $printTypePrice && $measurementPrice && $cardTemplatePrice) {
+                $price = ($paperTypePrice + $printTypePrice + $measurementPrice + $cardTemplatePrice) * $quantity;
+                $priceWithVat = $price * 1.21;
 
-            // Připočítání DPH
-            $priceWithVat = $price * 1.21;
-
-            // Výstup ceny ve formátu JSON
-            echo json_encode(['price' => number_format($priceWithVat, 2, '.', '')]);
+                echo json_encode(['success' => true, 'price' => number_format($priceWithVat, 2, '.', '')]);
+                return;
+            }
         }
+
+        $this->pridejZpravu('Neplatné vstupní údaje', self::ZPRAVA_CHYBA);
     }
 
-    // Akce pro vytvoření objednávky
     public function createOrderAction(): void
     {
+        header('Content-Type: application/json');
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Kontrola, zda jsou všechna potřebná data v POST requestu
             if (
                 empty($_POST['quantity']) ||
                 empty($_POST['template']) ||
                 empty($_POST['paperType']) ||
                 empty($_POST['printType']) ||
                 empty($_POST['measurement']) ||
-                empty($_POST['price'])
+                empty($_POST['price']) ||
+                empty($_POST['companyName']) ||
+                empty($_POST['phoneNumber']) ||
+                empty($_POST['email']) ||
+                empty($_FILES['logo'])
             ) {
-                echo json_encode(["success" => false, "message" => "Chybí některé údaje!"]);
+                $this->pridejZpravu('Chybí některé údaje!', self::ZPRAVA_CHYBA);
                 return;
             }
 
-            // Načtení dat z POST requestu
             $quantity = (int) $_POST['quantity'];
             $idCardTemplate = (int) $_POST['template'];
             $idPaperType = (int) $_POST['paperType'];
             $idPrint = (int) $_POST['printType'];
             $idMeasurement = (int) $_POST['measurement'];
             $price = (float) $_POST['price'];
+            $companyName = trim($_POST['companyName']);
+            $phoneNumber = trim($_POST['phoneNumber']);
+            $email = trim($_POST['email']);
 
-            // Kontrola hodnot (musí být větší než 0)
-            if ($quantity <= 0 || $price <= 0) {
-                $this->pridejZpravu('Neplatné údaje.', self::ZPRAVA_CHYBA);
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $this->pridejZpravu('Neplatný formát e-mailu!', self::ZPRAVA_CHYBA);
                 return;
             }
 
-            // Zavolání metody z modelu pro uložení objednávky
-            $orderId = OrderModel::createOrder($quantity, $idCardTemplate, $idPaperType, $idPrint, $idMeasurement, $price);
-
-            // Odpověď klientovi
-            if ($orderId) {
-                $this->pridejZpravu('Objednávka byla vytořena.', self::ZPRAVA_OK);
-            } else {
-                $this->pridejZpravu('Chyba při ukládání objednávky.', self::ZPRAVA_CHYBA);
+            if (!preg_match('/^[0-9\+\-\s]+$/', $phoneNumber)) {
+                $this->pridejZpravu('Neplatný formát telefonního čísla!', self::ZPRAVA_CHYBA);
+                return;
             }
+
+            $logoPath = "";
+            if ($_FILES['logo']['error'] === UPLOAD_ERR_OK) {
+                $allowedTypes = ['image/png', 'image/jpeg', 'image/gif'];
+                $fileType = mime_content_type($_FILES['logo']['tmp_name']);
+
+                if (!in_array($fileType, $allowedTypes)) {
+                    $this->pridejZpravu('Neplatný formát loga! Použijte PNG, JPG nebo GIF.', self::ZPRAVA_CHYBA);
+                    return;
+                }
+
+                $uploadDir = "logo/";
+                $fileName = time() . "_" . basename($_FILES["logo"]["name"]);
+                $logoPath = $uploadDir . $fileName;
+
+                if (!move_uploaded_file($_FILES["logo"]["tmp_name"], $logoPath)) {
+                    $this->pridejZpravu('Chyba při nahrávání souboru!', self::ZPRAVA_CHYBA);
+                    return;
+                }
+            } else {
+                $this->pridejZpravu('Musíte nahrát logo!', self::ZPRAVA_CHYBA);
+                return;
+            }
+
+            $orderId = OrderModel::createOrder($quantity, $idCardTemplate, $idPaperType, $idPrint, $idMeasurement, $price, $logoPath, $companyName, $phoneNumber, $email);
+
+            require_once 'mailer_objednavka.php';
+                if ($orderId) {
+                    if (sendOrderEmail($email, $orderId, $quantity, $price, $companyName, $phoneNumber)) {
+                        $this->pridejZpravu('Objednávka byla vytvořena, potvrzovací e-mail byl odeslán.', self::ZPRAVA_OK);
+                    } else {
+                        $this->pridejZpravu('Objednávka byla vytvořena, ale e-mail se nepodařilo odeslat.', self::ZPRAVA_CHYBA);
+                    }
+                    } else {
+                        $this->pridejZpravu('Chyba při ukládání objednávky.', self::ZPRAVA_CHYBA);
+                    }
+            
         }
     }
 }
+
+/*
+require_once 'mailer_registrace.php';
+                if (odeslatRegistracniEmail($email, $jmeno)) {
+                    $this->pridejZpravu('Byl jste úspěšně zaregistrován.', self::ZPRAVA_OK);
+                } else {
+                    $this->pridejZpravu('Registrace proběhla, ale e-mail se nepodařilo odeslat.', self::ZPRAVA_INFO);
+                }
+*/
+
