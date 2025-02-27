@@ -23,8 +23,8 @@ function sendOrderEmail($userEmail, $orderId, $quantity, $price, $companyName, $
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
-        $mail->setFrom('vizitkycalek@gmail.com', 'Vizitky Web');
-        $mail->addReplyTo('vizitkycalek@gmail.com', 'Podpora');
+        $mail->setFrom('vizitkycalek@gmail.com', 'Vizitky Čálek');
+        $mail->addReplyTo('vizitkycalek@gmail.com', 'Vizitky Čálek');
 
         // Přidání příjemce
         if (!filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
@@ -43,7 +43,9 @@ function sendOrderEmail($userEmail, $orderId, $quantity, $price, $companyName, $
                        <p><strong>Společnost:</strong> $companyName</p>
                        <p><strong>Telefon:</strong> $phoneNumber</p>
                        <p><strong>Počet kusů:</strong> $quantity</p>
-                       <p><strong>Cena:</strong> $formattedPrice Kč</p>";
+                       <p><strong>Cena:</strong> $formattedPrice Kč</p>
+                       <p>Ozveme se vám zda vaší objednávku vyhotovíme do 3 pracovních dnů</p>
+                       <p>S návrhem vaší vizitky se vám ozveme do 7 pracovních dnů.</p>";
 
         $mail->AltBody = "Potvrzení objednávky\n\n
                           Číslo objednávky: $orderId\n

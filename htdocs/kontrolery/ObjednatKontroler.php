@@ -140,4 +140,3 @@ require_once 'mailer_registrace.php';
                     $this->pridejZpravu('Registrace proběhla, ale e-mail se nepodařilo odeslat.', self::ZPRAVA_INFO);
                 }
 */
-

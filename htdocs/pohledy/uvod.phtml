@@ -1,2 +1,182 @@
+<!-- Přidání Swiper.js knihovny -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
+<style>
+  .hero {
+    width: 100%;
+    height: 350px;
+    background: url('img/') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+  }
+  .container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    padding: 40px 20px;
+    flex-wrap: wrap;
+  }
+  .box {
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+    padding: 20px;
+    background: #f8f8f8;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .box h2 {
+    margin-bottom: 10px;
+    color: #333;
+  }
+  .cta {
+    text-align: center;
+    margin: 40px 0;
+  }
+  .cta p {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  .cta a {
+    display: inline-block;
+    padding: 15px 30px;
+    background: #d41c1c;
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    transition: 0.3s;
+  }
+  .cta a:hover {
+    background: #a71515;
+  }
+
+  /* Styl pro slideshow */
+.swiper-container {
+  width: 100%;
+  height: 400px; /* Výška je nastavena na menší hodnotu, např. 400px */
+  margin: 0;
+  position: relative;
+}
+
+.swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Obrázek se přizpůsobí, ale zachová si proporce */
+}
+
+/* Nastavení pozice teček */
+.swiper-pagination {
+  left: 50%; transform: translateX(-50%);
+  position: absolute;
+  bottom: 10px; /* Tečky blíže spodní části obrázku */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+/* Nastavení pro šipky */
+.swiper-button-next, .swiper-button-prev {
+  position: absolute;
+  top: 50%; /* Šipky na střed */
+  transform: translateY(-50%);
+  color: white; /* Bílé šipky */
+  z-index: 10;
+}
+
+.swiper-button-next {
+  right: 10px; /* Šipka na pravý okraj */
+}
+
+.swiper-button-prev {
+  left: 10px; /* Šipka na levý okraj */
+}
+
+</style>
+
+<!-- Slideshow sekce -->
+<div class="swiper-container">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide"><img src="slideshow/obrazek1.jpg" alt="Vizitka 1"></div>
+    <div class="swiper-slide"><img src="images/vizitka2.jpg" alt="Vizitka 2"></div>
+    <div class="swiper-slide"><img src="images/vizitka3.jpg" alt="Vizitka 3"></div>
+    <div class="swiper-slide"><img src="images/vizitka4.jpg" alt="Vizitka 4"></div>
+  </div>
+  <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-pagination"></div>
+</div>
+
+<!-- Hlavní obsah -->
+<div class="hero">
+  Vizitky Čálek – Profesionální vizitky na míru
+</div>
+
 <h1><?= $_clanek['titulek'] ?></h1>
-<?= $_clanek['obsah'] ?>
+<p><?= $_clanek['obsah'] ?></p>
+
+<div class="container">
+  <div class="box">
+    <h2>🔹 Prémiová kvalita</h2>
+    <p>Vizitky tiskneme na kvalitní papír s precizním zpracováním a ostrými barvami.</p>
+  </div>
+  <div class="box">
+    <h2>🚀 Expresní výroba</h2>
+    <p>Objednejte dnes a vaše vizitky budou připravené k vyzvednutí nebo odeslání co nejrychleji.</p>
+  </div>
+  <div class="box">
+    <h2>🎨 Unikátní design</h2>
+    <p>Vyberte si z hotových šablon nebo si nechte navrhnout design na míru.</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="box">
+    <h2>📦 Možnosti úprav</h2>
+    <p>Lesklý/matný povrch, oblé rohy, laminace a další úpravy pro exkluzivní vzhled.</p>
+  </div>
+  <div class="box">
+    <h2>💼 Pro podnikatele</h2>
+    <p>Vizitky jsou důležitým prvkem vaší prezentace – dejte svému podnikání profesionální tvář.</p>
+  </div>
+  <div class="box">
+    <h2>💳 Skvělé ceny</h2>
+    <p>Nabízíme nejlepší poměr ceny a kvality. Velké objednávky = lepší cena!</p>
+  </div>
+</div>
+
+<div class="cta">
+  <a href="objednat">Vytvořit vlastní vizitky</a>
+</div>
+
+<div class="cta">
+  <p>Chcete se na něco zeptat?</p>
+  <a href="kontakt">Kontaktujte nás</a>
+</div>
+
+<script>
+  // Inicializace Swiper.js
+  var swiper = new Swiper('.swiper-container', {
+    loop: true, // Smyčka
+    autoplay: {
+      delay: 3000, // Automatické přepínání každé 3 sekundy
+      disableOnInteraction: false, // Po ručním přepnutí pokračuje autoplay
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true, // Možnost kliknout na tečky a změnit slide
+    },
+  });
+</script>
